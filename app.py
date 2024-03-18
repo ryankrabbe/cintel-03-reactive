@@ -92,3 +92,7 @@ with ui.layout_columns():
                 color="species",
                 size_max=8,
             )
+
+@reactive.calc
+def filtered_data():
+    return penguins_df
