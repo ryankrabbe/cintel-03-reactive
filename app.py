@@ -43,12 +43,12 @@ with ui.accordion(id="acc", open="Data Table"):
     with ui.accordion_panel("Data Table"):
         @render.data_frame
         def penguin_datatable():
-            return render.DataTable(penguins_df)
+            return filtered_data()
             
     with ui.accordion_panel("Data Grid"):
         @render.data_frame
         def penguin_datagrid():
-            return render.DataGrid(penguins_df)
+            return filtered_data()
 
     # Add a Plotly Histogram, Seaborn Histogram, and Plotly Scatterplot
     #Plotly Histogram
@@ -59,7 +59,7 @@ with ui.layout_columns():
         @render_plotly
         def plotly_histogram():
             return px.histogram(
-                penguins_df,
+                filtered_data(),
                 x=input.selected_attribute(),
                 nbins=input.plotly_bin_count(),
                 color="species")
@@ -71,7 +71,7 @@ with ui.layout_columns():
         @render.plot(alt="Seaborn Histogram")
         def seaborn_histogram():
             seaborn_hist = sns.histplot(
-                data=penguins_df,
+                data=filtered_data(),
                 x=input.selected_attribute(),
                 bins=input.seaborn_bin_count(),
             )
@@ -85,7 +85,7 @@ with ui.layout_columns():
         @render_plotly
         def plotly_scatterplot():
             return px.scatter(
-                penguins_df,
+                filtered_data(),
                 title="Plotly Scatterplot",
                 x="bill_length_mm",
                 y="bill_depth_mm",
