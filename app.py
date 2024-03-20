@@ -29,7 +29,13 @@ with ui.sidebar(open="open"):
         ui.input_checkbox_group("selected_species_list", 
                                  "Select Species", 
                                  ["Adelie", "Gentoo", "Chinstrap"], 
-                                 selected=["Adelie"], 
+                                 selected=["Adelie", "Gentoo", "Chinstrap"], 
+                                 inline=True)
+        
+        ui.input_checkbox_group("selected_island_list", 
+                                 "Select Island", 
+                                 ["Dream", "Biscoe", "Torgersen"], 
+                                 selected=["Dream", "Biscoe", "Torgersen"], 
                                  inline=True)
 
         # Add a hyperlink to the sidebar
@@ -95,4 +101,7 @@ with ui.layout_columns():
 
 @reactive.calc
 def filtered_data():
-    return penguins_df
+    return penguins_df[
+        (penguins_df["species"].isin(input.selected_species_list())) &
+        (penguins_df["island"].isin(input.selected_island_list()))
+    ]
